@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/stylem.css" class="stylechange">
+    <title>Document</title>
+</head>
+<body>
+    <div class="body">
+    <h1></h1>
+    <button onclick="update(-1)">نقص</button>
+    <button onclick="update(1)">زود</button>
+    </div>
+</body>
+<script>
+    function update(change) {
+        fetch("/data", {
+            method:"POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ change })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector("h1").textContent = data.Number
+        })
+    }
+    setInterval(() => {
+    fetch("/data")
+  .then(response => response.json())
+  .then(data => {
+    document.querySelector("h1").textContent = data.Number
+  })
+  },100)
+</script>
+</html>
